@@ -1,0 +1,83 @@
+.counter {
+    --bg-color: #f3f3f3;
+    --base-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 70px;
+    margin: 10% auto;
+    border: 3px solid var(--base-color);
+    border-radius: 5px;
+    color: var(--base-color);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    overflow: hidden;
+    &:hover {
+        color: var(--bg-color);
+        background-color: var(--base-color);
+        border-color: var(--bg-color);
+    }
+    &__count {
+        font-size: 2rem;
+        font-family: 'Segoe UI', sans-serif;
+        color: inherit;
+        animation: in 1s ease alternate forwards;
+        pointer-events: none;
+    }
+}
+
+.keyboard-row {
+    --bg-color: transparent;
+    --base-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 1px solid var(--base-color);
+    color: var(--base-color);
+    background-color: var(--bg-color);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.keyboard-row {
+    --bg-color: transparent;
+    --base-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+#backspace {
+    width: 50%!important;
+}
+
+#shift {
+    width: 25%!important;
+}
+
+#special1 {
+    width: 33%!important;
+}
+
+#special2 {
+    width: 34%!important;
+}
+
+#special3 {
+    width: 33%!important;
+}
+
+@media screen and (max-width: 991px) {
+    /* start of large tablet styles */
+}
+
+@media screen and (max-width: 767px) {
+    /* start of medium tablet styles */
+}
+
+@media screen and (max-width: 479px) {
+    /* start of phone styles */
+}
