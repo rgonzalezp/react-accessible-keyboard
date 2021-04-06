@@ -1,33 +1,4 @@
-.counter {
-    --bg-color: #f3f3f3;
-    --base-color: #666;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    width: 70px;
-    margin: 10% auto;
-    border: 3px solid var(--base-color);
-    border-radius: 5px;
-    color: var(--base-color);
-    background-color: var(--bg-color);
-    cursor: pointer;
-    overflow: hidden;
-    &:hover {
-        color: var(--bg-color);
-        background-color: var(--base-color);
-        border-color: var(--bg-color);
-    }
-    &__count {
-        font-size: 2rem;
-        font-family: 'Segoe UI', sans-serif;
-        color: inherit;
-        animation: in 1s ease alternate forwards;
-        pointer-events: none;
-    }
-}
-
-.keyboard-row {
+.react-accessible-keyboard-row {
     --bg-color: transparent;
     --base-color: #666;
     display: flex;
@@ -41,33 +12,53 @@
     overflow: hidden;
 }
 
-.keyboard-row {
-    --bg-color: transparent;
-    --base-color: #666;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-}
-
-#backspace {
+#react-accessible-keyboard-backspace {
     width: 50%!important;
 }
 
-#shift {
+#react-accessible-keyboard-shift {
     width: 25%!important;
 }
 
-#special1 {
+#react-accessible-keyboard-delete {
+    width: 25%!important;
+}
+
+#react-accessible-keyboard-autocomplete1 {
     width: 33%!important;
 }
 
-#special2 {
+#react-accessible-keyboard-autocomplete2 {
     width: 34%!important;
 }
 
-#special3 {
+#react-accessible-keyboard-autocomplete3 {
     width: 33%!important;
+}
+
+#react-accessible-keyboard-submit {
+    margin-left: 10px;
+}
+
+#react-accessible-keyboard-textarea {
+    --base-color: #666;
+    max-width: 90%;
+    width: 70%;
+    border: 1px solid var(--base-color);
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+    border-image: none;
+    border-radius: 6px 6px 6px 6px;
+    border-style: solid solid solid solid;
+    border-width: 2px 2px 2px 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+    color: white;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.2s ease 0s;
 }
 
 @media screen and (max-width: 991px) {

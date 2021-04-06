@@ -1,44 +1,42 @@
 {
-  "name": "react-accessible-keyboard",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "rollup -c",
-    "start": "rollup -c -w"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rgonzalezp/react-accessible-keyboard.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rgonzalezp/react-accessible-keyboard/issues"
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/rgonzalezp/react-accessible-keyboard#readme",
-  "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
-    "@types/styled-components": "^5.1.9",
-    "babel-core": "^6.26.3",
-    "babel-runtime": "^6.26.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rollup": "^2.41.0",
-    "rollup-plugin-sass": "^1.2.2",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "typescript": "^4.2.3"
-  },
-  "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "dependencies": {
-    "csstype": "^3.0.7"
-  }
+    "name": "react-accessible-keyboard",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rollup -c",
+        "start": "rollup -c -w"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rgonzalezp/react-accessible-keyboard.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rgonzalezp/react-accessible-keyboard/issues"
+    },
+    "files": [
+        "dist"
+    ],
+    "homepage": "https://github.com/rgonzalezp/react-accessible-keyboard#readme",
+    "devDependencies": {
+        "@types/react": "^17.0.3",
+        "@types/react-dom": "^17.0.2",
+        "@types/styled-components": "^5.1.9",
+        "babel-core": "^6.26.3",
+        "babel-runtime": "^6.26.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "rollup": "^2.41.0",
+        "rollup-plugin-sass": "^1.2.2",
+        "rollup-plugin-typescript2": "^0.30.0",
+        "typescript": "^4.2.3",
+        "csstype": "^3.0.7"
+    },
+    "peerDependencies": {
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    }
 }
