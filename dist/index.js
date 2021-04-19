@@ -48,6 +48,27 @@ function CustomKeyboard() {
     return (React__namespace.createElement("div", null));
 }
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __spreadArray(to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+}
+
 var Key = function (_a) {
     var getKeyOnClick = _a.getKeyOnClick, value = _a.value, height = _a.height, id = _a.id, darkmode = _a.darkmode;
     var retrieveKeyInfo = function (event) {
@@ -87,7 +108,7 @@ var TextBox = function (_a) {
 
 var useState = React__namespace.useState, useEffect = React__namespace.useEffect;
 var Keyboard = function (_a) {
-    var onKeyboardLoad = _a.onKeyboardLoad, onSubmit = _a.onSubmit, className = _a.className, location = _a.location, arrayWords = _a.arrayWords, darkmode = _a.darkmode;
+    var onKeyboardLoad = _a.onKeyboardLoad, onSubmit = _a.onSubmit, onKeyPressed = _a.onKeyPressed, className = _a.className, location = _a.location, arrayWords = _a.arrayWords, darkmode = _a.darkmode;
     //receive keys as props, not state
     var _b = useState([
         ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -104,10 +125,11 @@ var Keyboard = function (_a) {
         ["@", "#", "$", "_", "&", "-", "+", "(", ")", "/"],
         ["*", '"', "'", ":", ";", "!", "?", ".", ","],
     ];
-    var _c = useState(0), keyHeight = _c[0], setHeight = _c[1];
-    var _d = useState(""), userinput = _d[0], setUserinput = _d[1];
-    var _e = useState(false), shiftifyBoolean = _e[0], setShiftifyBoolean = _e[1];
-    var _f = useState(true), secondaryBoolean = _f[0], setSecondaryBoolean = _f[1];
+    var _c = useState(Array), keyTapHistory = _c[0], setKeyTapHistory = _c[1];
+    var _d = useState(0), keyHeight = _d[0], setHeight = _d[1];
+    var _e = useState(""), userinput = _e[0], setUserinput = _e[1];
+    var _f = useState(false), shiftifyBoolean = _f[0], setShiftifyBoolean = _f[1];
+    var _g = useState(true), secondaryBoolean = _g[0], setSecondaryBoolean = _g[1];
     var textBoxFlex = {
         width: "100%",
         display: "flex",
@@ -115,35 +137,111 @@ var Keyboard = function (_a) {
         "align-items": "center",
         "vertical-align": "middle",
     };
+    var getEventCoordinatesKeyboard = function (keyEvent) {
+        var keyboardBounding = window.document
+            .getElementById("keyboard")
+            .getBoundingClientRect();
+        keyEvent.x = keyEvent.x - keyboardBounding.x;
+        keyEvent.y = keyEvent.y - keyboardBounding.y;
+        return keyEvent;
+    };
     var retrieveKeyboardInfo = function () {
         var keyboardContainer = window.document.getElementById("keyboard");
+        var keyboardBounding = window.document
+            .getElementById("keyboard")
+            .getBoundingClientRect();
+        var keys = Array.from(document.getElementsByClassName("react-keyboard-key"));
+        var keysInfo = [];
+        keys.forEach(function (element) {
+            if (document.getElementById(element.id) !== null) {
+                var currentElement = document
+                    .getElementById(element.id)
+                    .getBoundingClientRect();
+                var key = { labels: [String], x: 0, y: 0, height: 0, width: 0 };
+                key.labels = [element.id];
+                //Center of each key, Relative position to the keyboard
+                key.x =
+                    currentElement.x - keyboardBounding.x + currentElement.width / 2;
+                key.y =
+                    currentElement.y - keyboardBounding.y + currentElement.height / 2;
+                key.height = currentElement.height;
+                key.width = currentElement.width;
+                keysInfo.push(key);
+            }
+        });
+        var heightRow = Array.from(document.getElementsByClassName("react-accessible-keyboard-row"))[0].getBoundingClientRect().height;
         var data = {
-            keyboardHeight: keyboardContainer === null || keyboardContainer === void 0 ? void 0 : keyboardContainer.clientHeight,
+            keyboardHeight: 5 * heightRow,
             keyboardWidth: keyboardContainer === null || keyboardContainer === void 0 ? void 0 : keyboardContainer.clientWidth,
+            keyboardKeys: keysInfo,
         };
         onKeyboardLoad(data);
     };
     var retrieveKeyInfo = function (e) {
         var textToSet = userinput.concat(e.content);
+        var newSet = __spreadArray(__spreadArray([], keyTapHistory), [e]);
+        setKeyTapHistory(newSet);
         setUserinput(textToSet);
+        var data = {
+            keyPressed: getEventCoordinatesKeyboard(e),
+            tapHistory: newSet,
+            currentInput: textToSet,
+        };
+        onKeyPressed(data);
     };
     var retrieveSpecialKeyInfo = function (e) {
-        var textToSet = userinput.concat(" ").concat(e.content);
+        var prefixInput = userinput.split(" ");
+        prefixInput.pop();
+        var prefixCleaned = prefixInput.join(" ");
+        var textToSet = prefixCleaned.concat(" ").concat(e.content).concat(" ");
+        if (prefixInput.length === 0) {
+            textToSet = prefixCleaned.concat(e.content).concat(" ");
+        }
+        var newSet = [];
+        setKeyTapHistory(newSet);
         setUserinput(textToSet);
+        var data = {
+            keyPressed: getEventCoordinatesKeyboard(e),
+            tapHistory: newSet,
+            currentInput: textToSet,
+        };
+        onKeyPressed(data);
+        // change this functionality to complete the word thats currently being written and go on to the next one
     };
     var sendQuery = function (e) {
         var textToUseAndEliminate = userinput;
         //E Contains tap info, bubbles up the whole textarea and deletes it.
         setUserinput("");
         onSubmit(textToUseAndEliminate, e);
+        var newSet = [];
+        setKeyTapHistory(newSet);
     };
-    var deleteInput = function () {
+    var deleteInput = function (e) {
         var textToSet = userinput.substring(0, userinput.length - 1);
+        var newkeyTapHistoryTodelete = keyTapHistory;
+        newkeyTapHistoryTodelete.pop();
+        var tapHistory = newkeyTapHistoryTodelete;
+        var newSet = __spreadArray([], tapHistory);
+        setKeyTapHistory(newSet);
         setUserinput(textToSet);
+        var data = {
+            keyPressed: getEventCoordinatesKeyboard(e),
+            tapHistory: newSet,
+            currentInput: textToSet,
+        };
+        onKeyPressed(data);
     };
-    var spaceInput = function () {
+    var spaceInput = function (e) {
         var textToSet = userinput.concat(" ");
+        var newSet = [];
+        setKeyTapHistory(newSet);
         setUserinput(textToSet);
+        var data = {
+            keyPressed: getEventCoordinatesKeyboard(e),
+            tapHistory: newSet,
+            currentInput: textToSet,
+        };
+        onKeyPressed(data);
     };
     var setSecondary = function () {
         if (secondaryBoolean) {
@@ -188,13 +286,6 @@ var Keyboard = function (_a) {
             //Set state to send keyboard information.
             retrieveKeyboardInfo();
         });
-        //Keyboard information
-        // const currentElementClientRect = currentElement.getBoundingClientRect();
-        // var key = {x:0,y:0,height:0,width:0,label:value};
-        // key.x = currentElementClientRect.x - 300 + currentElementClientRect.width / 2;
-        // key.y = currentElementClientRect.y - 300 + currentElementClientRect.height / 2;
-        // key.height = currentElementClientRect.height;
-        // key.width = currentElementClientRect.width;
         return function () { };
     }, [keyHeight]);
     return (React__namespace.createElement("div", { className: className },
