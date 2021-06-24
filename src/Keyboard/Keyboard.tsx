@@ -33,7 +33,6 @@ const Keyboard = ({
   ];
 
   const [keyTapHistory, setKeyTapHistory] = useState(Array);
-
   const [keyHeight, setHeight] = useState(0);
   const [userinput, setUserinput] = useState("");
   const [shiftifyBoolean, setShiftifyBoolean] = useState(false);
@@ -60,6 +59,7 @@ const Keyboard = ({
     keyEvent.y = keyEvent.y - keyboardBounding.y;
     return keyEvent;
   };
+  
   const retrieveKeyboardInfo = () => {
     const keyboardContainer = window.document.getElementById("keyboard");
 
@@ -309,9 +309,9 @@ const Keyboard = ({
           getKeyOnClick={shiftify}
         ></Key>
         <Key
-          id="react-accessible-keyboard-backspace"
+          id="react-accessible-keyboard-space"
           darkmode={darkmode}
-          value={"backspace"}
+          value={"space"}
           height={keyHeight}
           getKeyOnClick={spaceInput}
         ></Key>
